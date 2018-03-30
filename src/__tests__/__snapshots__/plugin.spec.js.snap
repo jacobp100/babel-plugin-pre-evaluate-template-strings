@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`With tag 1`] = `
+"
+const world = \\"world\\";
+const test = someTag\`
+      hello world
+    \`;"
+`;
+
+exports[`Without tag 1`] = `
+"
+const world = \\"world\\";
+const test = \`
+      hello world
+    \`;"
+`;
