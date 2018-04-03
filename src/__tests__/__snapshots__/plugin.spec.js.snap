@@ -1,8 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`With external duplicate constants file 1`] = `
+"
+import { test as world } from \\"/world\\";
+const test = someTag\`
+      hello world
+    \`;"
+`;
+
 exports[`With external file 1`] = `
 "
 import world from \\"/world\\";
+const test = someTag\`
+      hello world
+    \`;"
+`;
+
+exports[`With external file with duplicate constants 1`] = `
+"
+import { test as world } from \\"/world\\";
 const test = someTag\`
       hello world
     \`;"

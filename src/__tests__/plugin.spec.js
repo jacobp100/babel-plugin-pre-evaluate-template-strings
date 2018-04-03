@@ -64,3 +64,17 @@ test('With multiple external files', () => {
   expect(fs.readFileSync).toBeCalledWith('/world', 'utf-8');
   expect(fs.readFileSync).toHaveBeenLastCalledWith('/dictionary', 'utf-8');
 });
+
+test('With external file with duplicate constants', () => {
+  fs.readFileSync.mockReturnValue(`export const test = "world";`);
+
+  const code = plugin`
+    import { test as world } from "/world";
+    const test = someTag\`
+      hello \${world}
+    \`
+  `;
+
+  expect(code).toMatchSnapshot();
+  expect(fs.readFileSync).toBeCalledWith('/world', 'utf-8');
+});
