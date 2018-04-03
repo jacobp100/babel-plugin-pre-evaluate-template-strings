@@ -2,7 +2,6 @@
 
 import { resolve } from 'path';
 import generate from 'babel-generator';
-import shortHash from 'short-hash';
 
 import type {
   BabelCore,
@@ -19,10 +18,6 @@ import {
   instantiateModule,
   clearLocalModulesFromCache,
 } from '../lib/moduleSystem';
-
-function getMinifiedClassName(className: string) {
-  return `ln${shortHash(className)}`;
-}
 
 /**
  * const header = css`
@@ -45,18 +40,12 @@ export default function(
   state: State,
   requirements: RequirementSource[]
 ) {
-  const { name } = path.scope.generateUidIdentifier(title);
   const source = path.getSource() || generate(path.node).code;
 
   const replacement = getReplacement([
     ...requirements,
     {
-      code: `module.exports = ${source
-        .replace(/css(?!\.named)/g, `css.named('${name}', '${state.filename}')`)
-        .replace(
-          /css\.named\(([^,]+)\)/,
-          (input, customName) => `css.named(${customName}, '${state.filename}')`
-        )}`,
+      code: `module.exports = ${source}`,
       loc: path.node.loc.start,
     },
   ]);

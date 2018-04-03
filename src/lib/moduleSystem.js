@@ -36,7 +36,9 @@ const modulesCache: { [key: string]: Module } = {};
  * Resolve module id (and filename) relatively to parent module if specified.
  */
 function resolveModuleId(moduleId: string, parent: ?Module): string {
-  return NativeModule._resolveFilename(moduleId, parent, false);
+  return process.env.NODE_ENV === 'test'
+    ? moduleId
+    : NativeModule._resolveFilename(moduleId, parent, false);
 }
 
 /**
@@ -273,14 +275,11 @@ export function getCachedModule(moduleId: string): Module {
 }
 
 /**
- * Clear modules from cache which are neither from node_modules nor from linaria.
+ * Clear modules from cache which are neither from node_modules.
  */
 export function clearLocalModulesFromCache() {
   Object.keys(modulesCache)
-    .filter(
-      moduleId =>
-        !/node_modules/.test(moduleId) && !/linaria\/(build|src)/.test(moduleId)
-    )
+    .filter(moduleId => !/node_modules/.test(moduleId))
     .forEach(moduleId => {
       delete modulesCache[moduleId];
     });

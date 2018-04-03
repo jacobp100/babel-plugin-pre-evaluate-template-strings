@@ -20,7 +20,5 @@ export default function getReplacement(
     addLines(linesToAdd, lineIndex);
   });
 
-  output.push('/* linaria-preval */');
-
   return output.join('\n');
 }

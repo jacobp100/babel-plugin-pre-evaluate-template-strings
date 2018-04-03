@@ -1,34 +1,7 @@
 /* @flow */
-
-import generate from 'babel-generator';
-
-import type {
-  NodePath,
-  BabelTypes,
-  BabelVariableDeclarator,
-  RequirementSource,
-} from '../types';
+import type { NodePath, BabelTypes, RequirementSource } from '../types';
 
 import { getSelfBinding } from './utils';
-
-function getSourceForVariableDeclarationFromAst(
-  types: BabelTypes,
-  kind: string,
-  node: Object
-) {
-  const program = types.program([types.variableDeclaration(kind, [node])]);
-  return generate(program).code;
-}
-
-function isLinariaOutput(path: NodePath<BabelVariableDeclarator<any>>) {
-  return (
-    path.isVariableDeclarator() &&
-    path.node.init.leadingComments &&
-    path.node.init.leadingComments.some(
-      comment => comment.value.trim() === 'linaria-output'
-    )
-  );
-}
 
 export default function resolveSource(
   types: BabelTypes,
@@ -65,21 +38,12 @@ export default function resolveSource(
       break;
     case 'const':
     case 'let':
-    case 'var': {
-      if (isLinariaOutput(binding.path)) {
-        code = getSourceForVariableDeclarationFromAst(
-          types,
-          binding.kind,
-          binding.path.node
-        );
-      } else {
-        code =
-          binding.path.getSource().length === 0
-            ? null
-            : `${binding.kind} ${binding.path.getSource()}`;
-      }
+    case 'var':
+      code =
+        binding.path.getSource().length === 0
+          ? null
+          : `${binding.kind} ${binding.path.getSource()}`;
       break;
-    }
     default:
       code = binding.path.getSource();
       break;

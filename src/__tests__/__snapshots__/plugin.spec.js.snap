@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`With external file 1`] = `
+"
+import world from \\"/world\\";
+const test = someTag\`
+      hello world
+    \`;"
+`;
+
+exports[`With multiple external files 1`] = `
+"
+import world from \\"/world\\";
+
+const test = someTag\`
+      hello world
+    \`;"
+`;
+
 exports[`With tag 1`] = `
 "
 const world = \\"world\\";
