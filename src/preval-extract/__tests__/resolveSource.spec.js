@@ -78,33 +78,6 @@ describe('preval-extract/resolveSource', () => {
       {
         kind: 'const',
         path: {
-          getSource: () => 'source',
-          isVariableDeclarator: () => true,
-          node: {
-            type: 'VariableDeclarator',
-            id: {
-              type: 'Identifier',
-              name: 'test',
-            },
-            init: {
-              type: 'StringLiteral',
-              value: 'value',
-              leadingComments: [{ value: 'linaria-output' }],
-            },
-            loc: { start: { line: 0, column: 0 } },
-          },
-        },
-      },
-      {
-        code: 'const test = /*linaria-output*/"value";',
-        loc: { line: 0, column: 0 },
-      }
-    );
-
-    runAssertions(
-      {
-        kind: 'const',
-        path: {
           getSource: () => '',
           isVariableDeclarator: () => false,
           node: {

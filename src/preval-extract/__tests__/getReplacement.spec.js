@@ -45,7 +45,6 @@ describe('preval-extract/getReplacement module', () => {
 
 
     ${fixtures[3]}
-    /* linaria-preval */
     `;
 
     expect(code).toEqual(expectedOutput);

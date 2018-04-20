@@ -24,7 +24,7 @@ export default function resolveSource(
 
   if (!binding) {
     throw path.buildCodeFrameError(
-      'Linaria css evaluation error:\n' +
+      'CSS evaluation error:\n' +
         `  Could not find a reference to '${path.node.name}'.\n` +
         '  This might happen if you used some undeclared variable/function or a browser specific API.\n'
     );
